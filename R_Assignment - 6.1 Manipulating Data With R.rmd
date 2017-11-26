@@ -1,0 +1,123 @@
+
+Quiz: Data Manipulation : Practice (Non Graded) Assignment
+
+Submitted Nov 26, 12:57pm
+__________________________________________________________
+
+Question 1
+
+Use the inbult iris dataset, what is mean Sepal.Length for species setosa?
+```{r}
+x <- iris
+library(dplyr)
+x %>% filter(Species == "setosa") %>% summarise(mean(Sepal.Length))
+```
+
+Question 2
+
+Use the lakers data set in the package lubridate. How many matches were played in the months of October, December, January and April.
+```{r}
+x <- lakers
+library(lubridate)
+x$date <- ymd(x$date)
+x$MONTH <- month(x$date)
+x %>% group_by(MONTH) %>% summarise(MATCHCOUNT = n()) %>% filter(MONTH == 10|MONTH == 12|MONTH == 1|MONTH == 4)
+```
+
+Question 3
+
+Use the lakers data set in the package lubridate. How many matches were played by Pau Gasol against POR on Sundays?
+```{r}
+x %>% filter(player == "Pau Gasol", opponent == "POR", weekdays(date) == "Sunday") %>% nrow()
+```
+
+Question 4
+
+Use the lakers data set in the package lubridate. How many matches were played at 12:00 and on Monday?
+```{r}
+x %>% filter(weekdays(date) == "Monday", time == "12:00") %>% nrow()
+```
+
+Question 5
+
+Why would there be an error if following command is used:
+data%>%filter(column1=="abc",column2>25)%>%mean(), assume that "data" is a dataframe and column1 and column2 are the two columns in the dataframe, with column1 being a column containing string/character data and column2 being a column containing numeric data. Also assume that both the logical conditions are valid in the context of the data. (Assume that "dplyr" is loaded and installed in the system)
+```{r}
+# Answer: mean() will work only with a numeric vector but a dataframe is being piped to it.
+```
+
+Question 6
+
+Load the inbuilt dataset AdultUCI from arules package. How many females are there in the data set whose age is less than 50 and who are black?
+```{r}
+library(arules)
+data(AdultUCI)
+x <- AdultUCI
+x %>% filter(sex == "Female", age < 50, race == "Black") %>% nrow()
+```
+
+Question 7
+
+Using the data set AdultUCI from the package arules() find out the mean age corresponding to all categories in the column "income" for all white females who work less than 25 hours a week. (Consider the missing values in the column "income" also as a separate group)
+```{r}
+x %>% filter(sex == "Female", race == "White", `hours-per-week` < 25) %>% group_by(income) %>% summarise(mean(age))
+```
+
+Question 8
+
+Use the AdultUCI data set from the arules() package. How many 38 year olds are divorced?
+```{r}
+x %>% filter(age == 38, `marital-status` == "Divorced") %>% nrow()
+```
+
+Question 9
+
+Use the inbuilt mtcars data set, what is the average "mpg" for each category of car defined based on "number of gears".
+```{r}
+x <- mtcars
+x %>% group_by(gear) %>% summarize(mean(mpg))
+```
+
+Question 10
+
+Use the lakers data set in the package lubridate. How many matches were played when opponent to POR was LAL?
+```{r}
+x <- lakers
+x %>% filter(opponent == "POR", team == "LAL") %>% nrow()
+```
+
+
+
+___________________________________________________X___________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
